@@ -1,9 +1,12 @@
 package com.yhr.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,6 +22,9 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+    @JsonIgnore // quando é associacao de mao dupla precisa colocar isso pra nao loopar
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
     public User() {
 
@@ -70,6 +76,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override

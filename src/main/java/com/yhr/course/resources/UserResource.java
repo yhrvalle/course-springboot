@@ -16,18 +16,17 @@ import java.util.List;
 public class UserResource {
 
     @Autowired // para isso aqui funcionar essa classe precisa estar registrada como componente spring
+    // no caso @Service
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll()
-    {
-        List<User> list =  userService.findAll();
+    public ResponseEntity<List<User>> findAll() {
+        List<User> list = userService.findAll();
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping(value = "/{id}") // users/1 
-    public ResponseEntity<User> findById(@PathVariable(value = "id") Long id)
-    {
+    @GetMapping(value = "/{id}") // users/1
+    public ResponseEntity<User> findById(@PathVariable(value = "id") Long id) {
         User obj = userService.findById(id);
         return ResponseEntity.ok(obj);
     }
