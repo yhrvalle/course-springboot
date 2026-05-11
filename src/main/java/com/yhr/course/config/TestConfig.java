@@ -1,8 +1,10 @@
 package com.yhr.course.config;
 
+import com.yhr.course.entities.Category;
 import com.yhr.course.entities.Order;
 import com.yhr.course.entities.User;
 import com.yhr.course.entities.enums.OrderStatus;
+import com.yhr.course.repositories.CategoryRepository;
 import com.yhr.course.repositories.OrderRepository;
 import com.yhr.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,16 @@ public class TestConfig implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override // popula o database assim que roda a app
     public void run(String... args) throws Exception {
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
         User u1 = new User(null, "Maria", "maria@gmail.com", "988888888", "12345");
         User u2 = new User(null, "John", "john@gmail.com", "977777777", "123");
 
@@ -32,5 +41,6 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
     }
 }
