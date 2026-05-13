@@ -1,5 +1,6 @@
 package com.yhr.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -28,6 +29,9 @@ public class Product implements Serializable {
             joinColumns = @JoinColumn(name = "product_id"), // fk do prdouto
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>(); // para garantir q n tenha produto com mais de uma categoria
+
+    @OneToMany(mappedBy = "id.product", fetch = FetchType.EAGER)
+    private Set<OrderItem> items = new HashSet<>();
 
     public Product() {
 
@@ -84,7 +88,14 @@ public class Product implements Serializable {
     public Set<Category> getCategories() {
         return categories;
     }
-
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        for (OrderItem x : items) {
+            set.add(x.getOrder());
+        }
+        return set;
+    }
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
