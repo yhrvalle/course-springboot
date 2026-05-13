@@ -23,7 +23,7 @@ public class Product implements Serializable {
     private String imgUrl;
     // relação muitos para muitos
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"), // fk do prdouto
             inverseJoinColumns = @JoinColumn(name = "category_id"))
