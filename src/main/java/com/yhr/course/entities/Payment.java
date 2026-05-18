@@ -1,5 +1,6 @@
 package com.yhr.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -12,10 +13,14 @@ import java.util.Objects;
 public class Payment implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Instant moment;
+
+    @JsonIgnore
     @OneToOne
     @MapsId // classe dependente de order (0, 1)
     private Order order;
