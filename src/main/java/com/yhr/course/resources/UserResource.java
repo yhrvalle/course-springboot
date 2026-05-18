@@ -43,4 +43,9 @@ public class UserResource {
         return ResponseEntity.noContent().build(); // 204 no content
     }
 
+    @PutMapping(value = "/{id}") // id chega na url e o body vai ter um user obj
+    public ResponseEntity<User> update(@PathVariable(value = "id") Long id, @RequestBody User obj) {
+        obj = userService.update(id, obj); // atualiza no db as infos novas vindo do obj e preenche as infos que n vieram do json (password por ex)
+        return ResponseEntity.ok(obj);
+    }
 }
