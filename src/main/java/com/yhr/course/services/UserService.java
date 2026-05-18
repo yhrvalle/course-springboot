@@ -2,6 +2,7 @@ package com.yhr.course.services;
 
 import com.yhr.course.entities.User;
 import com.yhr.course.repositories.UserRepository;
+import com.yhr.course.services.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class UserService {
         // return userRepository.findById(id).orElse(null);
 
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj)
