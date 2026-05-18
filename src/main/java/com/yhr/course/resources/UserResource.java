@@ -25,16 +25,22 @@ public class UserResource {
     }
 
     @GetMapping(value = "/{id}") // users/1
-    public ResponseEntity<User> findById(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<User> findById(@PathVariable(value = "id") Long id) { // precisa estar na url
         User obj = userService.findById(id);
         return ResponseEntity.ok(obj);
     }
 
     @PostMapping()
-    public ResponseEntity<User> insert(@RequestBody User obj) { // precisa dessa anotation pra o java dessirealizar o json
+    public ResponseEntity<User> insert(@RequestBody User obj) { // precisa estar no body do json
         obj = userService.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+        return ResponseEntity.created(uri).body(obj); // 201 created
+    }
+
+    @DeleteMapping(value =  "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build(); // 204 no content
     }
 
 }
